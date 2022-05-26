@@ -7,17 +7,22 @@ url = 'http://127.0.0.1:5000/totes'
 timeout = 5
 
 logs = []
-tote_ids = []
-r = ""
+totes = []
+ids = []
 
 while True:
     try:
         r =  requests.get(url, timeout=timeout)
+        totes = r.json()
+        for tote in totes:
+            ids.append(tote[2])
     except (requests.ConnectionError, requests.Timeout) as e:
         print(e)
 
     logs = [f for f in os.listdir("logs") if os.path.isfile(os.path.join("logs", f))]
-    
-    # read through devices listed in log file
 
-    # for each device if it is in the tote_ids list, then update the coorosponding tote in thing board
+    for log in sorted(logs):
+        with open(log, "r") as f:
+            for device in f.readlines:
+                if ids.count(device) > 0:
+                    print('here')

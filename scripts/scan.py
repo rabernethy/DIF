@@ -13,14 +13,11 @@ class ScanDelegate(DefaultDelegate):
 			print("Received New Data From", dev.addr)
 
 		
-def write_data_to_log():
+def write_device_data_to_log():
 	with open("logs/{}".format(datetime.datetime.now()),"w") as f:
 		for dev in devices:
-			if dev.addr.startswith("ff:ff"):
-				f.write("Device {addr} {type},RSSI = {rssi} dB\n".format(addr=dev.addr,type=dev.addrType, rssi=dev.rssi))
-				for (adtype,desc,value) in dev.getScanData():
-					f.write("{desc} = {val}\n".format(desc=desc,val=value))
-			f.write("\n")
+			f.write("Device {addr}\n".format(addr=dev.addr))
+
 
 
 scanner = Scanner().withDelegate(ScanDelegate())
@@ -29,4 +26,4 @@ while True:
 	print("Scanning")
 	devices = scanner.scan(10.0)
 	print("Logging Scanned Devices")
-	write_data_to_log()
+	write_device_data_to_log()

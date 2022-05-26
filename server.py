@@ -4,8 +4,8 @@ from flask import Flask, g, request, render_template
 
 app = Flask(__name__)
 
-DATABASE = 'tags.db'
-ta
+DATABASE = 'totes.db'
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -32,7 +32,7 @@ def get_totes():
     for tote in query_db("select * from totes"):
         totes.append(tote)
     return json.dumps(totes)
-
+# WIP, does not actually add to db, must be done via shell currently
 @app.route("/add", methods = ['GET','POST'])
 def add_tote():
     if request.method == 'POST':
@@ -40,8 +40,9 @@ def add_tote():
         tote_num = request.form['tote_num']
         physical_id = request.form['physical_id']
         thing_board_id = request.form['thing_board_id']
+        data = (warehouse,tote_num,physical_id,thing_board_id)
         
-        query_db("insert into totes(warehouse,tote_num,physical_id,thing_board_id) values ({warehouse},{tote_num},{physical_id},{thing_board_id})".format(warehouse=warehouse,tote_num=tote_num,physical_id=physical_id,thing_board_id=thing_board_id))
+        query_db("INSERT INTO totes(warehouse,tote_num,physical_id,thing_board_id) VALUES(?,?,?,?);", data)
         return render_template('add.html')
     if request.method == 'GET':
         return render_template('add.html')

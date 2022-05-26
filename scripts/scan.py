@@ -16,7 +16,7 @@ class ScanDelegate(DefaultDelegate):
 def write_device_data_to_log():
 	with open("logs/{}".format(datetime.datetime.now()),"w") as f:
 		for dev in devices:
-			f.write("Device {addr}\n".format(addr=dev.addr))
+			f.write("{addr}\n".format(addr=dev.addr))
 
 
 

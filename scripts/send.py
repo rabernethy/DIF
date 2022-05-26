@@ -24,5 +24,6 @@ while True:
     for log in sorted(logs):
         with open("logs/{}".format(log), "r") as f:
             for device in f:
-                if ids.count(device) > 0:
-                    print('here')
+                for id in ids:
+                    if id == device:
+                        print("here")

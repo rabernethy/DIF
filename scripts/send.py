@@ -25,5 +25,6 @@ while True:
         with open("logs/{}".format(log), "r") as f:
             for device in f:
                 for id in ids:
+                    print(device + " " + id)
                     if id == device:
                         print("here")

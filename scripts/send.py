@@ -1,9 +1,10 @@
 # send.py written by Russell Abernethy
-import re
+from urllib import response
 import requests
 import os
 
-url = 'http://127.0.0.1:5000/totes'
+tote_url = 'http://127.0.0.1:5000/totes'
+thing_board_url = 'https://mis3502-shafer.com/thingsboard'
 timeout = 5
 
 logs = []
@@ -12,7 +13,7 @@ ids = []
 
 while True:
     try:
-        r =  requests.get(url, timeout=timeout)
+        r =  requests.get(tote_url, timeout=timeout)
         totes = r.json()
         for tote in totes:
             ids.append(tote[2])
@@ -22,10 +23,16 @@ while True:
     logs = [f for f in os.listdir("logs") if os.path.isfile(os.path.join("logs", f))]
 
     for log in sorted(logs):
+        print("Processing Log: {}\n".format(log))
         with open("logs/{}".format(log), "r") as f:
             for device in f:
                 for id in ids:
-                    print(device + " " + id + "\n\n")
                     if id == device.replace("\n",""):
-                        print("here")
-    exit()
+                        # find correct tote and send post to tb
+                        for tote in totes:
+                            if tote[2] == id:
+                                data = {'latitude':1, 'longitude': 1, 'tb_id': tote[3]}
+                                resp = requests.post(thing_board_url, data = data)
+                                print("Tote {w}{n} Data Sent to ThingsBoard\n".format(w=tote[0],n=tote[1]))
+        os.remove("logs/{}".format(log))
+        print("Finished Processing Log: {}".format(log))

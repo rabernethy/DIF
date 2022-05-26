@@ -28,3 +28,4 @@ while True:
                     print(device + " " + id + "\n\n")
                     if id == device:
                         print("here")
+    exit()

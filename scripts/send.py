@@ -23,7 +23,6 @@ while True:
 
     for log in sorted(logs):
         with open("logs/{}".format(log), "r") as f:
-            devices = f.readlines
-            for device in devices:
+            for device in f:
                 if ids.count(device) > 0:
                     print('here')

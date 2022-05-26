@@ -22,7 +22,7 @@ while True:
     logs = [f for f in os.listdir("logs") if os.path.isfile(os.path.join("logs", f))]
 
     for log in sorted(logs):
-        with open(log, "r") as f:
+        with open("logs/{}".format(log), "r") as f:
             for device in f.readlines:
                 if ids.count(device) > 0:
                     print('here')

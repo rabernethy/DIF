@@ -26,6 +26,6 @@ while True:
             for device in f:
                 for id in ids:
                     print(device + " " + id + "\n\n")
-                    if id == device:
+                    if id == device.replace("\n",""):
                         print("here")
     exit()

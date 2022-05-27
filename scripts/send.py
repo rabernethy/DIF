@@ -1,5 +1,4 @@
 # send.py written by Russell Abernethy
-from urllib import response
 import requests
 import os
 
@@ -15,8 +14,10 @@ while True:
     try:
         r =  requests.get(tote_url, timeout=timeout)
         totes = r.json()
+
+        # add all tote device ids to ids for reference later
         for tote in totes:
-            ids.append(tote[2])
+            ids.append(tote[2]) 
     except (requests.ConnectionError, requests.Timeout) as e:
         print(e)
 
@@ -34,5 +35,5 @@ while True:
                                 data = {'latitude':1, 'longitude': 1, 'tb_id': tote[3]}
                                 resp = requests.post(thing_board_url, data = data)
                                 print("Tote {w}{n} Data Sent to ThingsBoard\n".format(w=tote[0],n=tote[1]))
-        os.remove("logs/{}".format(log))
+        #os.remove("logs/{}".format(log))
         print("Finished Processing Log: {}".format(log))

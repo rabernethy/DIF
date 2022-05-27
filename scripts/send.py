@@ -34,6 +34,6 @@ while True:
                             if tote[2] == id:
                                 data = {'latitude':39.981560274048924, 'longitude': -75.15563001969575, 'tb_id': tote[3]}
                                 resp = requests.post(thing_board_url, data = data)
-                                print("Tote {w}{n} Data Sent to ThingsBoard\n".format(w=tote[0],n=tote[1]))
+                                print("Tote {w}{n} Data Sent to ThingsBoard with response {r}\n".format(w=tote[0],n=tote[1],r=resp.status_code))
         #os.remove("logs/{}".format(log))
         print("Finished Processing Log: {}".format(log))

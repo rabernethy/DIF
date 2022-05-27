@@ -35,7 +35,6 @@ while True:
                                 data = {'latitude':39.981560274048924,
                                         'longitude': -75.15563001969575,
                                         'deviceid': tote[3]}
-                                print(data[3])
                                 resp = requests.post(thing_board_url, data = data)
                                 print("Tote {w}{n} Data Sent to ThingsBoard with response {r}\n".format(w=tote[0],n=tote[1],r=resp.status_code))
         #os.remove("logs/{}".format(log))

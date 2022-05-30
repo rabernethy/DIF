@@ -1,4 +1,5 @@
 # scan.py written by Russell Abernethy
+from msilib import type_string
 from socket import timeout
 from serial import Serial
 from pynmeagps import NMEAReader
@@ -24,8 +25,16 @@ def write_device_data_to_log(nmr):
 		while not found:
 			try:
 				(raw, parsed) = nmr.read()
+
+				print(parsed)
+
 				lat = parsed.lat
 				lon = parsed.lon
+
+				# check if the module received a usable signal
+				if type(lat) == type(1.1): 
+					found = True
+
 			except AttributeError:
 				continue
 		f.write("{lat}\n{lon}\n".format(lat=lat, lon=lon))
@@ -39,6 +48,7 @@ def write_device_data_to_log(nmr):
 scanner = Scanner().withDelegate(ScanDelegate())
 stream = Serial('/dev/serial0', 9600, timeout=3)
 nmr = NMEAReader(stream)
+
 print("BLE Tote Scanner Started")
 while True:	
 	print("Scanning")

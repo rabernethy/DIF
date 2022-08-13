@@ -3,7 +3,7 @@
 
 from serial import Serial
 from pynmeagps import NMEAReader
-from bluepy.btle import Scanner, DefaultDelegate
+from bluepy.btle import Scanner, DefaultDelegate, BTLEDisconnectError
 import time, requests
 
 thing_board_url = 'https://mis3502-shafer.com/azureboard' # http://20.53.192.107/home 
@@ -69,6 +69,6 @@ if __name__ == '__main__':
                         'ABtelemetrytime': time.time()}
                 resp = requests.post(thing_board_url, data = data)
                 print("Tote {w} Data Sent to ThingsBoard with response status {r}.\n".format(w=device.replace('\n',"").replace(":",""),r=resp.status_code))
-        except bluepy.btle.BTLEDisconnectError:
+        except BTLEDisconnectError:
             print("Connection Error")
             continue

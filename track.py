@@ -45,14 +45,13 @@ def parse_device_scan(nmr):
 
 if __name__ == '__main__':
 
-    scanner = Scanner().withDelegate(ScanDelegate())
     stream = Serial('/dev/serial0', 9600, timeout=3)
     nmr = NMEAReader(stream)
 
     while True:
 
         print("Scanning for nearby totes:")
-
+        scanner = Scanner().withDelegate(ScanDelegate())
         devices = scanner.scan(30.0)
         results = parse_device_scan(nmr)
         

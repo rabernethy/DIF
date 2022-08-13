@@ -7,6 +7,7 @@ from bluepy.btle import Scanner, DefaultDelegate, BTLEDisconnectError
 import time, requests
 
 thing_board_url = 'https://mis3502-shafer.com/azureboard' # http://20.53.192.107/home 
+btle_scan_duration = 30 # seconds
 totes = []
 ids = []
 
@@ -27,11 +28,10 @@ def parse_device_scan(nmr):
     found = False
     while not found:
         try:
-            #(raw, parsed) = nmr.read()
-            lat = 39.98489822316684 # testing value
-            lon = -75.1489530825776 # testing value
-            #lat = parsed.lat
-            #lon = parsed.lon
+            #lat,lon = 39.98489822316684,-75.1489530825776 # testing value
+            (raw, parsed) = nmr.read()
+            lat = parsed.lat
+            lon = parsed.lon
             # check if the module received a usable signal
             if type(lat) == type(1.1): 
                 found = True
@@ -44,7 +44,8 @@ def parse_device_scan(nmr):
     return f
 
 if __name__ == '__main__':
-
+    
+    # Set up GPS Device
     stream = Serial('/dev/serial0', 9600, timeout=3)
     nmr = NMEAReader(stream)
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
         try:
             print("Scanning for nearby totes:")
             scanner = Scanner().withDelegate(ScanDelegate())
-            devices = scanner.scan(30.0)
+            devices = scanner.scan(btle_scan_duration)
             results = parse_device_scan(nmr)
         
             print("Processing found devices:")

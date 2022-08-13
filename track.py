@@ -27,7 +27,7 @@ def parse_device_scan(nmr):
     found = False
     while not found:
         try:
-            (raw, parsed) = nmr.read()
+            #(raw, parsed) = nmr.read()
             lat = 39.98489822316684 # testing value
             lon = -75.1489530825776 # testing value
             #lat = parsed.lat

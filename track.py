@@ -49,23 +49,26 @@ if __name__ == '__main__':
     nmr = NMEAReader(stream)
 
     while True:
-
-        print("Scanning for nearby totes:")
-        scanner = Scanner().withDelegate(ScanDelegate())
-        devices = scanner.scan(30.0)
-        results = parse_device_scan(nmr)
+        try:
+            print("Scanning for nearby totes:")
+            scanner = Scanner().withDelegate(ScanDelegate())
+            devices = scanner.scan(30.0)
+            results = parse_device_scan(nmr)
         
-        print("Processing found devices:")
+            print("Processing found devices:")
 
-        lat = results[0][0]
-        lon = results[0][1]
-        results = results[1:]
-        print(results)
+            lat = results[0][0]
+            lon = results[0][1]
+            results = results[1:]
+            print(results)
 
-        for device in results:
-            data = {'latitude':lat,
-                    'longitude':lon,
-                    'deviceid':device.replace('\n',"").replace(":",""),
-                    'ABtelemetrytime': time.time()}
-            resp = requests.post(thing_board_url, data = data)
-            print("Tote {w} Data Sent to ThingsBoard with response status {r}.\n".format(w=device.replace('\n',"").replace(":",""),r=resp.status_code))
+            for device in results:
+                data = {'latitude':lat,
+                        'longitude':lon,
+                        'deviceid':device.replace('\n',"").replace(":",""),
+                        'ABtelemetrytime': time.time()}
+                resp = requests.post(thing_board_url, data = data)
+                print("Tote {w} Data Sent to ThingsBoard with response status {r}.\n".format(w=device.replace('\n',"").replace(":",""),r=resp.status_code))
+        except bluepy.btle.BTLEDisconnectError:
+            print("Connection Error")
+            continue

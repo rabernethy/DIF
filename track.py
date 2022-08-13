@@ -22,13 +22,16 @@ class ScanDelegate(DefaultDelegate):
 
 def parse_device_scan(nmr): 
 # Parses responses for ones with Latitude & Longitude then adds devices found nearby
+    print("Parsing GPS Data")
     f = []
     found = False
     while not found:
         try:
             (raw, parsed) = nmr.read()
-            lat = parsed.lat
-            lon = parsed.lon
+            lat = 39.98489822316684 # testing value
+            lon = -75.1489530825776 # testing value
+            #lat = parsed.lat
+            #lon = parsed.lon
             # check if the module received a usable signal
             if type(lat) == type(1.1): 
                 found = True

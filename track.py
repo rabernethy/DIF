@@ -41,6 +41,7 @@ def parse_device_scan(nmr):
         f.append([lat,lon])
     for dev in devices:
         f.append(dev.addr)
+    print("Acquired GPS Data: <lat: {}|lon: {}>".format(lat,lon))
     return f
 
 if __name__ == '__main__':

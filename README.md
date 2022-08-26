@@ -1,7 +1,7 @@
 # DIF - AmerisourceBergen
-Code from Digital Innovation Foundry Tote Tracking Project
+## Tote Tracking Project
 
-Qritten by Russell Abernethy
+Written by Russell Abernethy
 
 # Running
 ```
